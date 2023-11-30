@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 :root {
+  --background: hsl(0, 0%, 7%);
+  --background-light: hsl(0, 0%, 18%);
+  --text: hsla(0, 0%, 100%, 0.871);
   --primary: hsl(5, 58%, 50%); /* #C84135 */
   --primary-light: hsl(5, 51%, 59%); /* #cb6960 */
   --primary-dark: hsl(5, 58%, 37%); /* #943027 */
@@ -21,6 +24,6 @@ html,
 body,
 :root {
   height: 100%;
-  background-color: #121212;
-  color: #ffffffde;
+  background-color: var(--background);
+  color: var(--text);
 }
