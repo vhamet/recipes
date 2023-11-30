@@ -20,10 +20,12 @@ module.exports = {
         transparent: "transparent",
         current: "currentColor",
         cream: "var(--cream)",
+        background: "var(--background)",
+        "background-light": "var(--background-light)",
+        text: "var(--text)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "var(--primary)",

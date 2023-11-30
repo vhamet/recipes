@@ -3,7 +3,7 @@ import HeaderActions from "./HeaderActions";
 
 const Header = () => {
   return (
-    <header className="p-4 flex items-center justify-between border-b border-border">
+    <header className="p-4 relative flex items-center justify-between border-b border-border">
       <Logo />
       <HeaderActions />
     </header>

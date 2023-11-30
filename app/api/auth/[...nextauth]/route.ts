@@ -20,10 +20,11 @@ const handler = NextAuth({
       if (!sessionUser) return session;
 
       session.user.id = sessionUser.id.toString();
+      session.user.username = sessionUser.username;
 
       return session;
     },
-    async signIn({ account, profile, user, credentials }) {
+    async signIn({ profile }) {
       if (!profile) return false;
 
       try {
@@ -35,14 +36,14 @@ const handler = NextAuth({
             data: {
               email: profile.email!,
               username: profile.name!.replaceAll(" ", "_").toLowerCase(),
-              image: profile.image || "",
+              image: profile.picture || "",
             },
           });
         }
 
         return true;
       } catch (error) {
-        console.log(error);
+        console.error(error);
         return false;
       }
     },

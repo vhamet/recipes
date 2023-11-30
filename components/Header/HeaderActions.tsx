@@ -7,11 +7,12 @@ import {
   getProviders,
   useSession,
   signIn,
-  signOut,
 } from "next-auth/react";
 import { BuiltInProviderType } from "next-auth/providers/index";
 
-import Button, { buttonVariants } from "../ui/Button";
+import HeaderNav from "./HeaderNav";
+import HeaderNavMobile from "@/components/Header/HeaderNavMobile";
+import Button from "@/components/ui/Button";
 
 const HeaderActions = () => {
   const { data: session, status } = useSession();
@@ -31,11 +32,10 @@ const HeaderActions = () => {
   if (status === "loading") return null;
 
   return session?.user ? (
-    <div>
-      <Button type="button" variant="outline" onClick={() => signOut()}>
-        Sign Out
-      </Button>
-    </div>
+    <>
+      <HeaderNav user={session.user} />
+      <HeaderNavMobile user={session.user} />
+    </>
   ) : (
     <div>
       {providers &&
