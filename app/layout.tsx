@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 
 import { siteConfig } from "@/config/site";
 import Header from "@/components/Header";
+import AuthProvider from "@/components/AuthProvider";
 
 import "./globals.css";
 
@@ -25,8 +26,10 @@ const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
-        {children}
+        <AuthProvider>
+          <Header />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

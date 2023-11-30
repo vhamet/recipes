@@ -7,12 +7,12 @@ import { logoFont } from "@/lib/fonts";
 const Logo = () => (
   <Link
     href="/"
-    className="hover:opacity-80 transition flex items-center gap-x-2 align"
+    className="hover:opacity-80 transition flex items-center gap-x-4 align"
   >
     <div className="h-10 w-10 flex items-center justify-center bg-cream text-primary rounded-full">
       <Image
         src="/logo.svg"
-        alt="logo"
+        alt="Recipes logo"
         height={28}
         width={28}
         className="h-6"
