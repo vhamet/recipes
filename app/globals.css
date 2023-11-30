@@ -3,10 +3,18 @@
 @tailwind utilities;
 
 :root {
-  --primary: 5deg, 58%, 50%; /* #C84135 */
-  --secondary: 187deg, 23%, 73%; /* #A9C5C8 */
+  --primary: hsl(5, 58%, 50%); /* #C84135 */
+  --primary-light: hsl(5, 51%, 59%); /* #cb6960 */
+  --primary-dark: hsl(5, 58%, 37%); /* #943027 */
+  --primary-foreground: hsla(0, 0%, 100%, 0.871);
+  --secondary: hsl(187, 23%, 73%); /* #A9C5C8 */
+  --secondary-light: hsl(185, 57%, 88%); /* #cfeff2 */
+  --secondary-dark: hsl(187, 11%, 54%); /* #7c9295 */
+  --secondary-foreground: #2c2c2c;
   --cream: #fffdeb; /* #FFFDEB */
   --border: 240deg 3.7% 15.9%;
+
+  --radius: 6px;
 }
 
 html,
