@@ -1,5 +1,11 @@
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowRightFromBracket,
+  faUser,
+  faBook,
+} from "@fortawesome/free-solid-svg-icons";
 
 import {
   DropdownMenu,
@@ -25,12 +31,18 @@ const HeaderNav = ({ user }: HeaderNavProps) => {
         <DropdownMenuTrigger className="flex gap-x-2 items-center">
           <UserAvatar user={user} />
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent className="p-4">
           <DropdownMenuItem>
-            <Link href="/profile">Profile</Link>
+            <Link href="/profile" className="flex items-center gap-x-2">
+              <FontAwesomeIcon icon={faUser} />
+              Profile
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link href="/recipes">My Recipes</Link>
+            <Link href="/recipes" className="flex items-center gap-x-2">
+              <FontAwesomeIcon icon={faBook} />
+              My Recipes
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem className="justify-center">
@@ -38,8 +50,10 @@ const HeaderNav = ({ user }: HeaderNavProps) => {
               type="button"
               variant="ghostPrimary"
               onClick={() => signOut()}
+              className="flex gap-x-2"
             >
               Sign Out
+              <FontAwesomeIcon icon={faArrowRightFromBracket} />
             </Button>
           </DropdownMenuItem>
         </DropdownMenuContent>
