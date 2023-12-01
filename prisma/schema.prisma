@@ -18,5 +18,68 @@ model User {
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   image         String
+  recipes       Recipe[]
   @@map(name: "users")
+}
+
+model Recipe {
+  id            String    @default(cuid()) @id
+  name          String   
+  description   String?    
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  author        User @relation(fields: [authorId], references: [id])
+  authorId      String
+  ingredients   RecipeIngredients[]
+  tags          RecipeTags[]
+  @@map(name: "recipes")
+}
+
+model Ingredient {
+  id            String    @default(cuid()) @id
+  name          String
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  recipes RecipeIngredients[]
+}
+
+model IngredientUnit {
+  id            String    @default(cuid()) @id
+  name          String
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  ingredients   RecipeIngredients[]
+}
+
+model RecipeIngredients {
+  recipe       Recipe     @relation(fields: [recipeId], references: [id])
+  recipeId     String // relation scalar field (used in the `@relation` attribute above)
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredientId String
+  quantity     Int?
+  unit         IngredientUnit? @relation(fields: [unitId], references: [id])
+  unitId       String
+  createdAt    DateTime  @default(now()) @map(name: "created_at")
+  updatedAt    DateTime  @updatedAt @map(name: "updated_at")
+
+  @@id([recipeId, ingredientId])
+}
+
+model Tag {
+  id            String    @default(cuid()) @id
+  name          String
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  recipes RecipeTags[]
+}
+
+model RecipeTags {
+  recipe       Recipe     @relation(fields: [recipeId], references: [id])
+  recipeId     String // relation scalar field (used in the `@relation` attribute above)
+  tag   Tag @relation(fields: [tagId], references: [id])
+  tagId String
+  createdAt    DateTime  @default(now()) @map(name: "created_at")
+  updatedAt    DateTime  @updatedAt @map(name: "updated_at")
+
+  @@id([recipeId, tagId])
 }
