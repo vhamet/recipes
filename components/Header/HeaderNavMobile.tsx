@@ -8,6 +8,8 @@ import {
   faArrowRightFromBracket,
   faUser,
   faBook,
+  faPlus,
+  IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 
 import AnimatedBurgerMenu from "@/components/AnimatedBurgerMenu";
@@ -15,9 +17,35 @@ import UserAvatar from "@/components/Header/UserAvatar";
 import Button from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
+type HeaderNavMobileItemProps = {
+  label: string;
+  icon: IconDefinition;
+  href: string;
+  noSeparator?: boolean;
+};
+
+const HeaderNavMobileItem = ({
+  label,
+  icon,
+  href,
+  noSeparator,
+}: HeaderNavMobileItemProps) => (
+  <Link
+    href={href}
+    className={cn(
+      "w-full py-4 flex items-center justify-end gap-x-2",
+      !noSeparator && "border-b border-cream"
+    )}
+  >
+    {label}
+    <FontAwesomeIcon icon={icon} className="text-2xl" />
+  </Link>
+);
+
 type HeaderNavMobileProps = {
   user: {
     username: string;
+    email: string;
     image: string;
   };
 };
@@ -36,28 +64,41 @@ const HeaderNavMobile = ({ user }: HeaderNavMobileProps) => {
           open ? "translate-x-0" : "translate-x-full"
         )}
       >
-        <nav className="flex flex-col items-end gap-y-4">
-          <div className="flex gap-x-2 items-center">
-            <label className="cursor-pointer text-sm">{user.username}</label>
+        <nav className="flex flex-col items-end">
+          <div className="mb-8 flex gap-x-2 items-center">
+            <div className="flex flex-col items-end">
+              <label className="text-sm">{user.username}</label>
+              <label className="text-xs">{user.email}</label>
+            </div>
             <UserAvatar user={user} />
           </div>
-          <Link href="/profile" className="flex items-center gap-x-2">
-            Profile
-            <FontAwesomeIcon icon={faUser} />
-          </Link>
-          <Link href="/recipes" className="flex items-center gap-x-2">
-            My Recipes
-            <FontAwesomeIcon icon={faBook} />
-          </Link>
-          <Button
-            type="button"
-            variant="ghost"
-            className="p-0 flex gap-x-2 text-base text-primary"
-            onClick={() => signOut()}
-          >
-            Sign Out
-            <FontAwesomeIcon icon={faArrowRightFromBracket} />
-          </Button>
+          <HeaderNavMobileItem
+            href="/recipes/create"
+            label="New Recipe"
+            icon={faPlus}
+          />
+          <HeaderNavMobileItem
+            href="/recipes"
+            label="My Recipes"
+            icon={faBook}
+          />
+          <HeaderNavMobileItem
+            href="/profile"
+            label="Profile"
+            icon={faUser}
+            noSeparator
+          />
+          <div className="w-full mt-12 flex justify-center">
+            <Button
+              type="button"
+              variant="ghost"
+              className="p-0 flex gap-x-2 text-base text-primary"
+              onClick={() => signOut()}
+            >
+              Sign Out
+              <FontAwesomeIcon icon={faArrowRightFromBracket} />
+            </Button>
+          </div>
         </nav>
       </aside>
     </div>

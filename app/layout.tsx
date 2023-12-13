@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 
 import { siteConfig } from "@/config/site";
 import Header from "@/components/Header";
 import AuthProvider from "@/components/AuthProvider";
 
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import { textFont } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: { default: siteConfig.name, template: `%s | ${siteConfig.name}` },
@@ -25,7 +23,7 @@ type RootLayoutProps = { children: React.ReactNode };
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={textFont.className}>
         <AuthProvider>
           <Header />
           {children}

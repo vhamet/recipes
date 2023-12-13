@@ -28,58 +28,66 @@ model Recipe {
   description   String?    
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  author        User @relation(fields: [authorId], references: [id])
+  author        User      @relation(fields: [authorId], references: [id])
   authorId      String
-  ingredients   RecipeIngredients[]
-  tags          RecipeTags[]
+  ingredients   RecipeIngredient[]
+  steps         Step[]
+  tags          RecipeTag[]
   @@map(name: "recipes")
 }
 
 model Ingredient {
   id            String    @default(cuid()) @id
-  name          String
+  name          String    @unique
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  recipes RecipeIngredients[]
+  recipes       RecipeIngredient[]
+  @@map(name: "ingredients")
 }
 
-model IngredientUnit {
-  id            String    @default(cuid()) @id
-  name          String
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  ingredients   RecipeIngredients[]
-}
-
-model RecipeIngredients {
+model RecipeIngredient {
   recipe       Recipe     @relation(fields: [recipeId], references: [id])
-  recipeId     String // relation scalar field (used in the `@relation` attribute above)
+  recipeId     String 
   ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
   ingredientId String
   quantity     Int?
-  unit         IngredientUnit? @relation(fields: [unitId], references: [id])
-  unitId       String
-  createdAt    DateTime  @default(now()) @map(name: "created_at")
-  updatedAt    DateTime  @updatedAt @map(name: "updated_at")
+  unit         String?
+  createdAt    DateTime   @default(now()) @map(name: "created_at")
+  updatedAt    DateTime   @updatedAt @map(name: "updated_at")
 
   @@id([recipeId, ingredientId])
+  @@map(name: "recipe_ingredients")
 }
+
+model Step {
+  id            String    @default(cuid()) @id
+  order         Int
+  description   String
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  recipe        Recipe    @relation(fields: [recipeId], references: [id])
+  recipeId      String
+  @@map(name: "steps")
+}
+
 
 model Tag {
   id            String    @default(cuid()) @id
-  name          String
+  name          String    @unique
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  recipes RecipeTags[]
+  recipes       RecipeTag[]
+  @@map(name: "tags")
 }
 
-model RecipeTags {
-  recipe       Recipe     @relation(fields: [recipeId], references: [id])
-  recipeId     String // relation scalar field (used in the `@relation` attribute above)
-  tag   Tag @relation(fields: [tagId], references: [id])
-  tagId String
+model RecipeTag {
+  recipe       Recipe    @relation(fields: [recipeId], references: [id])
+  recipeId     String 
+  tag          Tag       @relation(fields: [tagId], references: [id])
+  tagId        String
   createdAt    DateTime  @default(now()) @map(name: "created_at")
   updatedAt    DateTime  @updatedAt @map(name: "updated_at")
 
   @@id([recipeId, tagId])
+  @@map(name: "recipe_tags")
 }
