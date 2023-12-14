@@ -7,15 +7,16 @@ import { Input } from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { Tag } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
-import { normalizeString } from "@/lib/utils";
+import { cn, normalizeString } from "@/lib/utils";
 
 type TagsFormProps = {
   tags: Tag[];
   onAddTag: (tag: Tag) => void;
   onRemoveTag: (tag: Tag) => void;
+  disabled: boolean;
 };
 
-const TagsForm = ({ tags, onAddTag, onRemoveTag }: TagsFormProps) => {
+const TagsForm = ({ tags, onAddTag, onRemoveTag, disabled }: TagsFormProps) => {
   const tagForm = useRef<HTMLFormElement>(null);
   const tagNameInput = useRef<HTMLInputElement>(null);
   const [tagError, setTagError] = useState("");
@@ -59,19 +60,26 @@ const TagsForm = ({ tags, onAddTag, onRemoveTag }: TagsFormProps) => {
           name="name"
           placeholder="Healthy, cheesy, ... ?"
           className="max-w-[10rem]"
+          disabled={disabled}
         />
-        <Button type="submit">
+        <Button type="submit" disabled={disabled}>
           <FontAwesomeIcon icon={faPlus} />
         </Button>
       </form>
       <div className="flex flex-wrap gap-x-2 gap-y-2">
         {tags.map((tag) => (
-          <Badge key={tag.id} className="flex items-center gap-x-2">
+          <Badge
+            key={tag.id}
+            className={cn(
+              "flex items-center gap-x-2",
+              disabled && "opacity-70"
+            )}
+          >
             {tag.name}
             <FontAwesomeIcon
               icon={faXmark}
-              className="cursor-pointer"
-              onClick={() => onRemoveTag(tag)}
+              className={cn(disabled ? "cursor-not-allowed" : "cursor-pointer")}
+              onClick={() => !disabled && onRemoveTag(tag)}
             />
           </Badge>
         ))}

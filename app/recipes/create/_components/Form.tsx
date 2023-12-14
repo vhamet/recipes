@@ -12,9 +12,11 @@ import IngredientsForm from "@/app/recipes/create/_components/IngredientsForm";
 import TagsForm from "@/app/recipes/create/_components/TagsForm";
 import StepsForm from "@/app/recipes/create/_components/StepsForm";
 import { Ingredient, Recipe, Step, Tag } from "@/lib/types";
+import Loader from "@/components/Loader";
 
 type CreateFormProps = {
   onSubmit: (data: Recipe) => void;
+  submitting: boolean;
 };
 
 type Errors = {
@@ -24,7 +26,7 @@ type Errors = {
   steps?: string;
 };
 
-const CreateForm = ({ onSubmit }: CreateFormProps) => {
+const CreateForm = ({ onSubmit, submitting }: CreateFormProps) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState<Errors>({});
@@ -86,6 +88,7 @@ const CreateForm = ({ onSubmit }: CreateFormProps) => {
               placeholder="What are we cooking ?"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              disabled={submitting}
             />
           </div>
           <div className="flex flex-col space-y-1.5">
@@ -95,6 +98,7 @@ const CreateForm = ({ onSubmit }: CreateFormProps) => {
               placeholder="Tell me more"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              disabled={submitting}
             />
           </div>
           <br />
@@ -104,6 +108,7 @@ const CreateForm = ({ onSubmit }: CreateFormProps) => {
             onAddIngredient={addIngredient}
             onRemoveIngredient={removeIngredient}
             error={errors.ingredients}
+            disabled={submitting}
           />
           <br />
           <StepsForm
@@ -111,16 +116,28 @@ const CreateForm = ({ onSubmit }: CreateFormProps) => {
             onAddStep={addStep}
             onRemoveStep={removeStep}
             error={errors.steps}
+            disabled={submitting}
           />
           <br />
-          <TagsForm tags={tags} onAddTag={addTag} onRemoveTag={removeTag} />
+          <TagsForm
+            tags={tags}
+            onAddTag={addTag}
+            onRemoveTag={removeTag}
+            disabled={submitting}
+          />
         </CardContent>
 
         <CardFooter className="flex justify-end gap-x-4">
           <Link href="/" className={buttonVariants({ variant: "outline" })}>
             Cancel
           </Link>
-          <Button onClick={handleSubmit}>Let&apos;s go !</Button>
+          <Button
+            onClick={handleSubmit}
+            className="w-[94px]"
+            disabled={submitting}
+          >
+            {submitting ? <Loader /> : "Let's go !"}
+          </Button>
         </CardFooter>
       </Card>
     </div>

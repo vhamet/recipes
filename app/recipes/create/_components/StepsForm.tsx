@@ -12,6 +12,7 @@ type StepsFormProps = {
   steps: Step[];
   onAddStep: (step: Step) => void;
   onRemoveStep: (step: Step) => void;
+  disabled: boolean;
   error?: string;
 };
 
@@ -19,6 +20,7 @@ const StepsForm = ({
   steps,
   onAddStep,
   onRemoveStep,
+  disabled,
   error,
 }: StepsFormProps) => {
   const stepForm = useRef<HTMLFormElement>(null);
@@ -64,8 +66,9 @@ const StepsForm = ({
           ref={stepNameTextarea}
           name="description"
           placeholder="What to do ?"
+          disabled={disabled}
         />
-        <Button type="submit">
+        <Button type="submit" disabled={disabled}>
           <FontAwesomeIcon icon={faPlus} />
         </Button>
       </form>
@@ -75,6 +78,7 @@ const StepsForm = ({
             <DeleteTrashIcon
               className="text-xs"
               handleClick={() => onRemoveStep(step)}
+              disabled={disabled}
             />
             <label className="text-xs">{step.order}.</label>
             <p className="flex-grow italic text-xs whitespace-pre-wrap">

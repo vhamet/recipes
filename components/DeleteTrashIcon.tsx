@@ -7,19 +7,28 @@ import { cn } from "@/lib/utils";
 type DeleteTrashIconProps = {
   handleClick: () => void;
   className?: string;
+  disabled?: boolean;
 };
 
-const DeleteTrashIcon = ({ handleClick, className }: DeleteTrashIconProps) => {
+const DeleteTrashIcon = ({
+  handleClick,
+  className,
+  disabled,
+}: DeleteTrashIconProps) => {
   const [hovering, setHovering] = useState(false);
 
   return (
     <FontAwesomeIcon
       icon={faTrash}
-      onClick={handleClick}
+      onClick={disabled ? undefined : handleClick}
       onMouseOver={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
-      shake={hovering}
-      className={cn("text-lg text-primary cursor-pointer", className)}
+      shake={!disabled && hovering}
+      className={cn(
+        "text-lg text-primary cursor-pointer",
+        disabled && "opacity-70 cursor-not-allowed",
+        className
+      )}
     />
   );
 };

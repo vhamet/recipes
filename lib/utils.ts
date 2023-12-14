@@ -19,3 +19,10 @@ export const formatIngredient = ({ name, quantity, unit }: Ingredient) => {
 
   return `${amount} ${capitalize(name)}`;
 };
+
+export const wait = (delay = 500) =>
+  new Promise<boolean>((resolve) =>
+    setTimeout(() => {
+      resolve(true);
+    }, delay)
+  );

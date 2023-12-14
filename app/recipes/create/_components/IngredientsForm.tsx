@@ -13,6 +13,7 @@ type IngredientsFormProps = {
   ingredients: Ingredient[];
   onAddIngredient: (ingredient: Ingredient) => void;
   onRemoveIngredient: (ingredient: Ingredient) => void;
+  disabled: boolean;
   error?: string;
 };
 
@@ -20,6 +21,7 @@ const IngredientsForm = ({
   ingredients,
   onAddIngredient,
   onRemoveIngredient,
+  disabled,
   error,
 }: IngredientsFormProps) => {
   const ingredientForm = useRef<HTMLFormElement>(null);
@@ -60,15 +62,21 @@ const IngredientsForm = ({
         className="flex items-center gap-x-2"
         onSubmit={addIngredient}
       >
-        <Input ref={ingredientNameInput} name="name" placeholder="Name" />
+        <Input
+          ref={ingredientNameInput}
+          name="name"
+          placeholder="Name"
+          disabled={disabled}
+        />
         <Input
           name="quantity"
           type="number"
           step=".01"
           placeholder="Quantity"
+          disabled={disabled}
         />
-        <Input name="unit" placeholder="Unit" />
-        <Button type="submit">
+        <Input name="unit" placeholder="Unit" disabled={disabled} />
+        <Button type="submit" disabled={disabled}>
           <FontAwesomeIcon icon={faPlus} />
         </Button>
       </form>
@@ -77,6 +85,7 @@ const IngredientsForm = ({
           <DeleteTrashIcon
             className="text-xs"
             handleClick={() => onRemoveIngredient(ingredient)}
+            disabled={disabled}
           />
           <label className="text-xs">{formatIngredient(ingredient)}</label>
         </div>

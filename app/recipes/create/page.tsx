@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import CreateForm from "@/app/recipes/create/_components/Form";
 import { headingFont } from "@/lib/fonts";
-import { cn } from "@/lib/utils";
+import { cn, wait } from "@/lib/utils";
 import { Recipe } from "@/lib/types";
 
 const CreateRecipePage = () => {
@@ -13,6 +13,7 @@ const CreateRecipePage = () => {
 
   const [submitting, setSubmitting] = useState(false);
   const handleSubmit = async (recipe: Recipe) => {
+    setSubmitting(true);
     try {
       const response = await fetch("/api/recipe/create", {
         method: "POST",
@@ -39,7 +40,7 @@ const CreateRecipePage = () => {
       </h1>
       <p className="mb-8 text-sm">Better be good</p>
 
-      <CreateForm onSubmit={handleSubmit} />
+      <CreateForm onSubmit={handleSubmit} submitting={submitting} />
     </main>
   );
 };
