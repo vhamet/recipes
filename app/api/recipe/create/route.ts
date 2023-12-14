@@ -9,7 +9,7 @@ const checkRecipeHasError = (recipe: Recipe) => {
   if (!recipe.name) return "You must name your recipe";
 
   recipe.ingredients = recipe.ingredients.reduce((acc, ingredient) => {
-    ingredient.name = normalizeString(ingredient.name, "plural");
+    ingredient.name = normalizeString(ingredient.name);
     if (ingredient.unit) ingredient.unit = ingredient.unit.trim();
     const quantity = Number(ingredient.quantity);
     if (
@@ -57,14 +57,6 @@ const createRecipe = (recipe: Recipe, authorId: string) => {
           },
         },
       });
-
-      // await tx.step.createMany({
-      //   data: recipe.steps.map((step) => ({
-      //     order: step.order,
-      //     description: step.description,
-      //     recipeId: newRecipe.id,
-      //   })),
-      // });
 
       await tx.tag.createMany({
         data: recipe.tags.map(({ name }) => ({ name })),

@@ -23,7 +23,7 @@ const CreateRecipePage = () => {
 
       if (response.ok) {
         const data = await response.json();
-        router.push(`/recipe/${data.recipeId}`);
+        router.push(`/recipes/${data.recipeId}`);
       }
     } catch (error) {
       console.log(error);

@@ -40,7 +40,7 @@ const TagsForm = ({ tags, onAddTag, onRemoveTag }: TagsFormProps) => {
 
     tagForm.current?.reset();
     tagNameInput.current?.focus();
-    onAddTag({ ...formData, id: Date.now() });
+    onAddTag({ ...formData, id: Date.now().toString() });
   };
 
   return (

@@ -4,7 +4,9 @@
 // - add pictures
 // - search by ingredient, recipe name, tag
 // - Alert provider
-// - remove plural
+// - disable form on creating/updating
+// - ingredient pictures
+// - time, diffculty, price
 
 const Home = () => {
   return (

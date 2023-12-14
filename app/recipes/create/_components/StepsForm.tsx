@@ -40,7 +40,11 @@ const StepsForm = ({
 
     stepForm.current?.reset();
     stepNameTextarea.current?.focus();
-    onAddStep({ ...formData, id: Date.now(), order: steps.length + 1 });
+    onAddStep({
+      ...formData,
+      id: Date.now().toString(),
+      order: steps.length + 1,
+    });
   };
 
   return (

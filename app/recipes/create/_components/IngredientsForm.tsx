@@ -34,7 +34,7 @@ const IngredientsForm = ({
       new FormData(event.currentTarget)
     ) as unknown as Ingredient;
 
-    formData.name = normalizeString(formData.name, "plural");
+    formData.name = normalizeString(formData.name);
     if (!formData.name) {
       setIngredientError("Ingredient must have a name");
       return;
@@ -42,7 +42,7 @@ const IngredientsForm = ({
 
     ingredientForm.current?.reset();
     ingredientNameInput.current?.focus();
-    onAddIngredient({ ...formData, id: Date.now() });
+    onAddIngredient({ ...formData, id: Date.now().toString() });
   };
 
   return (
