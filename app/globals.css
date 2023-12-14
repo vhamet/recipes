@@ -27,3 +27,8 @@ body,
   background-color: var(--background);
   color: var(--text);
 }
+
+.placeholder::placeholder {
+  font-size: 12px !important;
+  opacity: 0.6 !important;
+}

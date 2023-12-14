@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const plugin = require("tailwindcss/plugin");
+
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -81,5 +84,17 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    plugin(function ({
+      addVariant,
+    }: {
+      addVariant: (name: string, rule: string) => unknown;
+    }) {
+      addVariant(
+        "mobile-only",
+        "@media screen and (max-width: theme('screens.sm'))"
+      ); // instead of hard-coded 640px use sm breakpoint value from config. Or anything
+    }),
+  ],
 };

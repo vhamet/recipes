@@ -18,5 +18,76 @@ model User {
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   image         String
+  recipes       Recipe[]
   @@map(name: "users")
+}
+
+model Recipe {
+  id            String    @default(cuid()) @id
+  name          String   
+  description   String?    
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  author        User      @relation(fields: [authorId], references: [id])
+  authorId      String
+  ingredients   RecipeIngredient[]
+  steps         Step[]
+  tags          RecipeTag[]
+  @@map(name: "recipes")
+}
+
+model Ingredient {
+  id            String    @default(cuid()) @id
+  name          String    @unique
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  recipes       RecipeIngredient[]
+  @@map(name: "ingredients")
+}
+
+model RecipeIngredient {
+  recipe       Recipe     @relation(fields: [recipeId], references: [id])
+  recipeId     String 
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredientId String
+  quantity     Int?
+  unit         String?
+  createdAt    DateTime   @default(now()) @map(name: "created_at")
+  updatedAt    DateTime   @updatedAt @map(name: "updated_at")
+
+  @@id([recipeId, ingredientId])
+  @@map(name: "recipe_ingredients")
+}
+
+model Step {
+  id            String    @default(cuid()) @id
+  order         Int
+  description   String
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  recipe        Recipe    @relation(fields: [recipeId], references: [id])
+  recipeId      String
+  @@map(name: "steps")
+}
+
+
+model Tag {
+  id            String    @default(cuid()) @id
+  name          String    @unique
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  recipes       RecipeTag[]
+  @@map(name: "tags")
+}
+
+model RecipeTag {
+  recipe       Recipe    @relation(fields: [recipeId], references: [id])
+  recipeId     String 
+  tag          Tag       @relation(fields: [tagId], references: [id])
+  tagId        String
+  createdAt    DateTime  @default(now()) @map(name: "created_at")
+  updatedAt    DateTime  @updatedAt @map(name: "updated_at")
+
+  @@id([recipeId, tagId])
+  @@map(name: "recipe_tags")
 }
