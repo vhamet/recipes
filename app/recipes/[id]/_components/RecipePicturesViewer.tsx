@@ -7,6 +7,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Picture, Recipe } from "@/lib/types";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import useDisableScroll from "@/hooks/useDisableScroll";
 
 type RecipePicturesViewerProps = {
   recipe: Recipe;
@@ -17,6 +18,7 @@ const PICTURE_CLASSES =
 
 const RecipePicturesViewer = ({ recipe }: RecipePicturesViewerProps) => {
   const [selectedPicture, setSelectedPicture] = useState<Picture | null>(null);
+  useDisableScroll(!!selectedPicture);
 
   if (!recipe.pictures.length) return null;
 
