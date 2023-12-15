@@ -2,7 +2,6 @@ import React, { FormEvent, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-import { Label } from "@/components/ui/Label";
 import Button from "@/components/ui/Button";
 import { Step } from "@/lib/types";
 import DeleteTrashIcon from "@/components/DeleteTrashIcon";
@@ -51,12 +50,12 @@ const StepsForm = ({
 
   return (
     <div className="flex flex-col space-y-1.5">
-      <Label className="flex items-baseline justify-between">
+      <h2 className="flex items-baseline justify-between">
         Steps
         {(stepError || error) && (
           <label className="text-xs text-red-800">{error || stepError}</label>
         )}
-      </Label>
+      </h2>
       <form
         ref={stepForm}
         className="flex items-center gap-x-2"

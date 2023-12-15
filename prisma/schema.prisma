@@ -32,6 +32,7 @@ model Recipe {
   authorId      String
   ingredients   RecipeIngredient[]
   steps         Step[]
+  pictures      Picture[]
   tags          RecipeTag[]
   @@map(name: "recipes")
 }
@@ -68,6 +69,16 @@ model Step {
   recipe        Recipe    @relation(fields: [recipeId], references: [id])
   recipeId      String
   @@map(name: "steps")
+}
+
+model Picture {
+  id            String    @default(cuid()) @id
+  url           String
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  recipe        Recipe    @relation(fields: [recipeId], references: [id])
+  recipeId      String
+  @@map(name: "pictures")
 }
 
 

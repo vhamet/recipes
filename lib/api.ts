@@ -38,6 +38,13 @@ type DbRecipe = {
     updatedAt: Date;
     recipeId: string;
   }[];
+  pictures: {
+    id: string;
+    url: string;
+    createdAt: Date;
+    updatedAt: Date;
+    recipeId: string;
+  }[];
   tags: ({
     tag: {
       id: string;
@@ -52,7 +59,8 @@ type DbRecipe = {
 };
 
 const parseRecipe = (recipe: DbRecipe) => {
-  const { id, name, description, author, ingredients, steps, tags } = recipe;
+  const { id, name, description, author, ingredients, steps, pictures, tags } =
+    recipe;
   return {
     id,
     name,
@@ -71,6 +79,10 @@ const parseRecipe = (recipe: DbRecipe) => {
       order,
       description,
     })),
+    pictures: pictures.map(({ id, url }) => ({
+      id,
+      url,
+    })),
     tags: tags.map(({ tag: { id, name } }) => ({ id, name })),
   } as Recipe;
 };
@@ -86,6 +98,7 @@ export const fetchRecipe = async (recipeId: string) => {
         },
       },
       steps: true,
+      pictures: true,
       tags: {
         include: {
           tag: { select: { id: true, name: true } },

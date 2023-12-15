@@ -7,6 +7,7 @@
 // - disable form on creating/updating
 // - ingredient pictures
 // - time, diffculty, price
+// - dynamic title
 
 const Home = () => {
   return (
