@@ -2,7 +2,6 @@ import React, { FormEvent, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-import { Label } from "@/components/ui/Label";
 import { Input } from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import DeleteTrashIcon from "@/components/DeleteTrashIcon";
@@ -49,14 +48,14 @@ const IngredientsForm = ({
 
   return (
     <div className="flex flex-col space-y-1.5">
-      <Label className="flex items-baseline justify-between">
+      <h2 className="flex items-baseline justify-between">
         Ingredients{" "}
         {(ingredientError || error) && (
           <label className="text-xs text-red-800">
             {error || ingredientError}
           </label>
         )}
-      </Label>
+      </h2>
       <form
         ref={ingredientForm}
         className="flex items-center gap-x-2"

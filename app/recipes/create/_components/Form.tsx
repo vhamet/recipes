@@ -11,8 +11,9 @@ import { Textarea } from "@/components/ui/Textarea";
 import IngredientsForm from "@/app/recipes/create/_components/IngredientsForm";
 import TagsForm from "@/app/recipes/create/_components/TagsForm";
 import StepsForm from "@/app/recipes/create/_components/StepsForm";
-import { Ingredient, Recipe, Step, Tag } from "@/lib/types";
+import { Ingredient, PictureUpload, Recipe, Step, Tag } from "@/lib/types";
 import Loader from "@/components/Loader";
+import PicturesForm from "@/app/recipes/create/_components/PicturesForm";
 
 type CreateFormProps = {
   onSubmit: (data: Recipe) => void;
@@ -52,6 +53,12 @@ const CreateForm = ({ onSubmit, submitting }: CreateFormProps) => {
   const addTag = (tag: Tag) => setTags([...tags, tag]);
   const removeTag = (tag: Tag) => setTags(tags.filter((t) => t.id !== tag.id));
 
+  const [pictures, setPictures] = useState<PictureUpload[]>([]);
+  const addPictures = (newPictures: PictureUpload[]) =>
+    setPictures([...pictures, ...newPictures]);
+  const removePicture = (picture: PictureUpload) =>
+    setPictures(pictures.filter((t) => t.id !== picture.id));
+
   const handleSubmit = () => {
     setErrors({});
     if (!name)
@@ -66,7 +73,15 @@ const CreateForm = ({ onSubmit, submitting }: CreateFormProps) => {
 
     if (Object.keys(errors).length) return;
 
-    onSubmit({ name, description, ingredients, steps, tags });
+    onSubmit({
+      name,
+      description,
+      ingredients,
+      steps,
+      tags,
+      picturesUpload: pictures,
+      pictures: [],
+    });
   };
 
   return (
@@ -123,6 +138,12 @@ const CreateForm = ({ onSubmit, submitting }: CreateFormProps) => {
             tags={tags}
             onAddTag={addTag}
             onRemoveTag={removeTag}
+            disabled={submitting}
+          />
+          <PicturesForm
+            pictures={pictures}
+            onAddPictures={addPictures}
+            onRemovePicture={removePicture}
             disabled={submitting}
           />
         </CardContent>

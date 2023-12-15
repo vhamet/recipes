@@ -15,11 +15,16 @@ const CreateRecipePage = () => {
   const handleSubmit = async (recipe: Recipe) => {
     setSubmitting(true);
     try {
+      const formData = new FormData();
+      for (const { file } of recipe.picturesUpload!) {
+        formData.append("files", file);
+      }
+      delete recipe.picturesUpload;
+      formData.append("recipe", JSON.stringify(recipe));
+
       const response = await fetch("/api/recipe/create", {
         method: "POST",
-        body: JSON.stringify({
-          recipe,
-        }),
+        body: formData,
       });
 
       if (response.ok) {

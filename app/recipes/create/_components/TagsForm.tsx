@@ -2,7 +2,6 @@ import React, { FormEvent, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-import { Label } from "@/components/ui/Label";
 import { Input } from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { Tag } from "@/lib/types";
@@ -46,10 +45,10 @@ const TagsForm = ({ tags, onAddTag, onRemoveTag, disabled }: TagsFormProps) => {
 
   return (
     <div className="flex flex-col space-y-1.5">
-      <Label className="flex items-baseline justify-between">
+      <h2 className="flex items-baseline justify-between">
         Tags
         {tagError && <label className="text-xs text-red-800">{tagError}</label>}
-      </Label>
+      </h2>
       <form
         ref={tagForm}
         className="flex items-center gap-x-2"

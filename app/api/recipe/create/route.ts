@@ -1,8 +1,20 @@
 import { getServerSession } from "next-auth";
+import { put, del } from "@vercel/blob";
 
 import prisma from "@/lib/prisma";
 import { Ingredient, Recipe, Step } from "@/lib/types";
 import { normalizeString } from "@/lib/utils";
+
+const uploadPictures = async (prefix: string, files: File[]) => {
+  const now = Date.now();
+  const blobs = await Promise.all(
+    files.map((file, i) =>
+      put(`${prefix}_${now}_${i}`, file, { access: "public" })
+    )
+  );
+
+  return blobs.map(({ url }) => url);
+};
 
 const checkRecipeHasError = (recipe: Recipe) => {
   recipe.name = recipe.name.trim();
@@ -53,6 +65,11 @@ const createRecipe = (recipe: Recipe, authorId: string) => {
             create: recipe.steps.map(({ description, order }) => ({
               description,
               order,
+            })),
+          },
+          pictures: {
+            create: recipe.pictures.map(({ url }) => ({
+              url,
             })),
           },
         },
@@ -118,17 +135,28 @@ export const POST = async (request: Request) => {
       status: 401,
     });
 
-  const { recipe }: { recipe: Recipe } = await request.json();
-  const recipeError = checkRecipeHasError(recipe);
-  if (recipeError) return new Response(recipeError, { status: 400 });
-
+  let pictureUrls;
   try {
+    const formData = await request.formData();
+    const files = formData.getAll("files") as File[];
+    const jsonRecipe = formData.get("recipe") as string;
+    let recipe;
+    if (jsonRecipe) recipe = JSON.parse(jsonRecipe);
+    if (!recipe) return new Response("Invalid recipe data", { status: 400 });
+
+    const recipeError = checkRecipeHasError(recipe);
+    if (recipeError) return new Response(recipeError, { status: 400 });
+    pictureUrls = await uploadPictures(normalizeString(recipe.name), files);
+    recipe.pictures = pictureUrls.map((url, i) => ({ id: `${i}`, url }));
+
     const newRecipe = await createRecipe(recipe, user.id);
 
     return new Response(JSON.stringify({ recipeId: newRecipe.id }), {
       status: 200,
     });
   } catch (error) {
+    console.error({ error });
+    if (pictureUrls) await del(pictureUrls);
     return new Response("Failed to create a new recipe", { status: 500 });
   }
 };

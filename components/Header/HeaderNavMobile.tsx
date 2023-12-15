@@ -60,7 +60,7 @@ const HeaderNavMobile = ({ user }: HeaderNavMobileProps) => {
       </div>
       <aside
         className={cn(
-          "w-64 h-screen py-20 px-4 fixed top-0 right-0 bg-background-light border-l border-border duration-500",
+          "w-64 h-screen py-20 px-4 fixed top-0 right-0 z-10 bg-background-light border-l border-border duration-500",
           open ? "translate-x-0" : "translate-x-full"
         )}
       >

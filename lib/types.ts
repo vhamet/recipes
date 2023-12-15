@@ -24,6 +24,16 @@ export type Ingredient = {
   unit?: string;
 };
 
+export type PictureUpload = {
+  id: string;
+  file: File;
+};
+
+export type Picture = {
+  id: string;
+  url: string;
+};
+
 export type Recipe = {
   name: string;
   description?: string;
@@ -31,4 +41,6 @@ export type Recipe = {
   ingredients: Ingredient[];
   steps: Step[];
   tags: Tag[];
+  pictures: Picture[];
+  picturesUpload?: PictureUpload[];
 };
