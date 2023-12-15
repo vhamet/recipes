@@ -14,10 +14,11 @@ export const capitalize = (s: string) =>
 
 export const formatIngredient = ({ name, quantity, unit }: Ingredient) => {
   let amount = "";
-  if (quantity && unit) amount = ` ${quantity} ${unit}`;
-  else if (quantity || unit) amount = ` ${quantity}${unit}`;
+  if (quantity && unit) amount = `${quantity} ${unit} `;
+  else if (quantity) amount = `${quantity} `;
+  else if (unit) amount = `${unit} `;
 
-  return `${amount} ${capitalize(name)}`;
+  return `${amount}${capitalize(name)}`;
 };
 
 export const wait = (delay = 500) =>

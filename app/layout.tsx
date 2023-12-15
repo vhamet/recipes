@@ -6,6 +6,7 @@ import AuthProvider from "@/components/AuthProvider";
 
 import "./globals.css";
 import { textFont } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: { default: siteConfig.name, template: `%s | ${siteConfig.name}` },

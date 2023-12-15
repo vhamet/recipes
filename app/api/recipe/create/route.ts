@@ -22,16 +22,15 @@ const checkRecipeHasError = (recipe: Recipe) => {
 
   recipe.ingredients = recipe.ingredients.reduce((acc, ingredient) => {
     ingredient.name = normalizeString(ingredient.name);
+    ingredient.quantity = Number(ingredient.quantity);
     if (ingredient.unit) ingredient.unit = ingredient.unit.trim();
-    const quantity = Number(ingredient.quantity);
+
     if (
       !ingredient.name ||
-      (ingredient.quantity && ingredient.quantity <= 0) ||
-      isNaN(quantity)
+      isNaN(ingredient.quantity!) ||
+      ingredient.quantity! <= 0
     )
       return acc;
-
-    ingredient.quantity = quantity;
 
     return [...acc, ingredient];
   }, [] as Ingredient[]);
