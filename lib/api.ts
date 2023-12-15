@@ -74,11 +74,13 @@ const parseRecipe = (recipe: DbRecipe) => {
         unit,
       })
     ),
-    steps: steps.map(({ id, order, description }) => ({
-      id,
-      order,
-      description,
-    })),
+    steps: steps
+      .map(({ id, order, description }) => ({
+        id,
+        order,
+        description,
+      }))
+      .toSorted((s1, s2) => s1.order - s2.order),
     pictures: pictures.map(({ id, url }) => ({
       id,
       url,

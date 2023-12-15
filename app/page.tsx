@@ -8,6 +8,7 @@
 // - ingredient pictures
 // - time, diffculty, price
 // - dynamic title
+// - max input sizes (names, descrp, ...)
 
 const Home = () => {
   return (
